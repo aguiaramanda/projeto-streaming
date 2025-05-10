@@ -7,8 +7,28 @@ import asyncHandler from '../middleware/asyncHandler';
 export class UserController {
   static createUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password } = req.body;
-    const newUser = await User.create({ name, email, password });
-    return res.status(201).json(newUser);
+
+    const userExists = await User.findOne({ where: { email } });
+    if (userExists) {
+      return res.status(400).json({ message: 'Usuário já cadastrado' });
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = await User.create({ 
+      name, 
+      email, 
+      password: hashedPassword  
+    });
+
+    return res.status(201).json({
+      message: 'Usuário criado com sucesso',
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+      }
+    });
   });
 
   static getAllUsers = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
