@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/variables';
+
+body {
+  background-color: variables.$primary-dark;
+  color: variables.$light;
+}
+
+button {
+  background-color: variables.$primary;
+  border-color: variables.$secondary;
+  color: variables.$light;
+
+  &:hover {
+    background-color: variables.$secondary;
+  }
+}
