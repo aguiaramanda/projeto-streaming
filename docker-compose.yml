@@ -24,12 +24,12 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
-      - db
+      - db 
     env_file:                         
       - ./backend/.env  
-    command: ["wait-for-it", "db:5432", "--", "npm", "run", "test"]
     networks:
       - backend
+
 volumes:
   db_data:
 
