@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes';
 import playlistRoutes from './routes/playlistRoutes';
 import musicRoutes from './routes/musicRoutes';
+import deezerRoutes from './routes/deezerRoutes';
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 app.use('/api/users', userRoutes);
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/musics', musicRoutes);
+app.use('/api/deezer', deezerRoutes);
 
 sequelize.sync().then(() => {
     console.log('Conectado ao banco de dados.');
