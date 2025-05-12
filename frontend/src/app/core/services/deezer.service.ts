@@ -32,4 +32,8 @@ export class DeezerService {
   public loadGenres(): Observable<Genre[]> {
     return this.http.get<Genre[]>(`${this.apiUrl}/genres`);
   } 
+
+  createPlaylist(playlist: { name: string, description: string }): Observable<Playlist> {
+    return this.http.post<Playlist>(`${this.apiUrl}/playlists`, playlist);
+  }
 }

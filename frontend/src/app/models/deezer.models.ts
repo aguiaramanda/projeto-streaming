@@ -13,7 +13,7 @@ export interface Playlist {
   name: string;
   description?: string;
   cover?: string;
-  musics: Music[];
+  tracks: Music[];
 }
 
 export interface Artists {

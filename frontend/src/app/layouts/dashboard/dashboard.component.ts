@@ -6,6 +6,7 @@ import { Artists, Genre, Music, Playlist, Track } from '../../models/deezer.mode
 import { subscribeOn } from 'rxjs';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { SearchService } from '../../core/services/search.service';
+import { MusicService } from '../../core/services/music.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private deezerService: DeezerService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private musicService: MusicService
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +112,19 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  public onPlay(track: any) {
-    alert(`Para tocar ${track.title}, faça login primeiro!`);
+  public onPlay(playlist: Playlist): void {
+    const firstTrack = playlist.tracks[0]; 
+    const music: Music = {
+      id: firstTrack.id,
+      title: firstTrack.title,
+      artist: firstTrack.artist,
+      album: firstTrack.title,
+      preview: firstTrack.preview,
+    };
+
+    this.musicService.play(music); 
+    this.isPlaying = true;
   }
+
+
 }
