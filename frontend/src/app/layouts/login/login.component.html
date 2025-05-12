@@ -1,33 +1,32 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 shadow" style="width: 400px; background-color: #1c1c1c;">
-    <h3 class="text-center text-white mb-4">PurpleMusic - Login</h3>
-    
-    <form (ngSubmit)="login()">
-      <div class="form-group mb-3">
-        <input 
-          type="email" 
-          class="form-control" 
-          placeholder="Email" 
-          [(ngModel)]="email" 
-          name="email"
-          required
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="login-container">
+    <h4>Bem-vindo ao PurpleMusic</h4>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Senha"
+          formControlName="password"
+          class="form-control"
         />
       </div>
 
-      <div class="form-group mb-3">
-        <input 
-          type="password" 
-          class="form-control" 
-          placeholder="Senha" 
-          [(ngModel)]="password" 
-          name="password"
-          required
-        />
-      </div>
-
-      <button class="btn btn-primary w-100">Entrar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+        Entrar
+      </button>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
-
-    <p *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+    <div class="register-link">
+      <p>Ainda não tem uma conta? <a routerLink="/register">Inscreva-se</a></p>
+    </div>
   </div>
 </div>

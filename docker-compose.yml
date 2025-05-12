@@ -29,6 +29,16 @@ services:
       - ./backend/.env  
     networks:
       - backend
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '4200:8080'
+    working_dir: /app
+    networks:
+      - backend
 
 volumes:
   db_data:

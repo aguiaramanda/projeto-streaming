@@ -1,0 +1,36 @@
+/* register.component.css */
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 200px;
+  background-color: #271540;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: #8348bc;
+  border-color: #8348bc;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #9872d8;
+  border-color: #9872d8;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+}
