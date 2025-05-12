@@ -11,7 +11,7 @@
             <h3 class="mt-4 mb-3">Músicas em alta</h3>
             <div class="featured">
                 <div class="card-wrapper" *ngFor="let track of topTracks">
-                    <div class="card bg-dark text-white" (click)="onPlay(track.title)">
+                    <div class="card bg-dark text-white" (click)="playMusic(track)">
                         <img [src]="track.album.cover" class="card-img-top" alt="{{ track.preview }}">
                     </div>
                 </div>
@@ -20,7 +20,7 @@
             <h3 class="mt-4 mb-3">Genêros em alta</h3>
             <div class="featured">
                 <div class="card-wrapper" *ngFor="let genre of genres">
-                    <div class="card bg-dark text-white" (click)="onPlay(genre.name)">
+                    <div class="card bg-dark text-white" >
                         <img [src]="genre.picture" class="card-img-top" alt="{{ genre.name }}">
                     </div>
                 </div>
