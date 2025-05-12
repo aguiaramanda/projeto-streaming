@@ -1,0 +1,58 @@
+ @import '../../../styles/variables';
+
+ .navbar-container {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background-color: $secondary-dark !important;
+    top: 0px;
+  }
+
+  .search-bar input {
+    width: 300px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 47px;
+    height: calc(100% - 47px);
+    width: 220px;
+    background-color: $secondary-dark !important;
+    z-index: 1000;
+  }
+
+  .list-group li{
+    background-color: $secondary-dark !important;
+  }
+
+  .list-group-item a {
+    color: $light;
+    text-decoration: none;
+  }
+
+  .list-group-item a:hover {
+    color: $secondary;
+  }
+
+  .btn-secondary{
+    background-color: $secondary-dark !important;
+    border: none;
+  }
+
+  .dropdown-menu{
+    background-color: #271240 !important;
+    color: $light !important;
+  }
+
+  .dropdown-item{
+    color: $light !important;
+  }
+
+  .dropdown-item:focus, .dropdown-item:hover {
+    color: $light !important;
+    background-color: $secondary !important;
+}

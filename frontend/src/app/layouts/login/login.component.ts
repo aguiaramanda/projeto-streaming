@@ -28,13 +28,14 @@ export class LoginComponent {
 
   public async onSubmit() {
     if (this.loginForm.invalid) return;
-    try {
-      await this.authService.login(this.loginForm.value);
-      this.router.navigate(['/dashboard']);
-    } catch (error: any) {
-      this.errorMessage = 'Erro ao fazer login. Verifique suas credenciais.';
-      console.error(error);
-    }
+    await this.authService.login(this.loginForm.value)
+    .then((response: any) => {
+      localStorage.setItem('token', response.token);
+      this.router.navigate(['/dashboard']); 
+    })
+    .catch((err) => {
+      console.error('Erro ao fazer login:', err);
+    });
   }
 
 }

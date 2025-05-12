@@ -68,7 +68,7 @@ export class DeezerService {
   public static async getGenres() {
   try {
     const response = await axios.get(`${this.BASE_URL}/genre`);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error('Erro ao buscar gêneros:', error);
     throw error;

@@ -1,24 +1,14 @@
-# Etapa de construção (builder)
-FROM node:18-alpine AS builder
-
+# Build da aplicação Angular
+FROM node:18 AS build
 WORKDIR /app
-COPY package.json package-lock.json ./  
+COPY . .
 RUN npm install
+RUN npm run build --prod
 
-COPY . .  
-RUN npm run build -- --output-path=dist  
+# Configuração do Nginx
+FROM nginx:latest
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY dist/frontend/browser /usr/share/nginx/html
 
-# Etapa final
-FROM node:18-alpine
-
-WORKDIR /app
-# Criar a estrutura de diretórios necessária
-RUN mkdir -p /app/dist/frontend
-
-# Copiar os arquivos de produção gerados no build para o local correto
-COPY --from=builder /app/dist/browser /app/dist/frontend
-
-RUN npm install -g http-server  
-
-EXPOSE 8080  
-CMD ["http-server", "dist/frontend", "-p", "8080"] 
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
