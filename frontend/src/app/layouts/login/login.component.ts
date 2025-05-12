@@ -1,32 +1,40 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service'; 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  loginForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService, 
+    private router: Router) {
+      this.loginForm = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+      });
+    }
 
-  login() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.errorMessage = 'Usuário ou senha inválidos';
-      }
-    });
+  public async onSubmit() {
+    if (this.loginForm.invalid) return;
+    try {
+      await this.authService.login(this.loginForm.value);
+      this.router.navigate(['/dashboard']);
+    } catch (error: any) {
+      this.errorMessage = 'Erro ao fazer login. Verifique suas credenciais.';
+      console.error(error);
+    }
   }
+
 }

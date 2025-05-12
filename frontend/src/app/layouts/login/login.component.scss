@@ -1,14 +1,53 @@
-body {
-  background-color: #121212;
-  color: #ffffff;
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 200px;
+  background-color: #271540;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
 }
 
-.card {
-  border-radius: 10px;
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
   border: none;
 }
 
 .btn-primary {
-  background-color: #6a0dad;
-  border-color: #6a0dad;
+  width: 100%;
+  background-color: #8348bc;
+  border-color: #8348bc;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #9872d8;
+  border-color: #9872d8;
+}
+
+.error-message {
+  color: #f28b82;
+  margin-top: 10px;
+}
+
+.register-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.register-link a {
+  color: #8348bc;  /* Escolha a cor que preferir */
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }
