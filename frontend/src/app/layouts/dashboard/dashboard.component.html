@@ -1,35 +1,56 @@
 <div class="container mt-4">
-  <h3 class="mb-3">Playlists Sugeridas</h3>
-    <div class="featured">
-        <div class="card-wrapper" *ngFor="let playlist of predefinedPlaylists">
-            <div class="card bg-dark text-white" (click)="onPlay(playlist)">
-                <img [src]="playlist.cover" class="card-img-top" alt="{{ playlist.name }}">
+    <div class="hide-on-search">
+          <h3 class="mb-3">Playlists Sugeridas</h3>
+            <div class="featured">
+                <div class="card-wrapper" *ngFor="let playlist of predefinedPlaylists">
+                    <div class="card bg-dark text-white" (click)="onPlay(playlist)">
+                        <img [src]="playlist.cover" class="card-img-top" alt="{{ playlist.name }}">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <h3 class="mt-4 mb-3">Músicas em alta</h3>
-    <div class="featured">
-        <div class="card-wrapper" *ngFor="let track of topTracks">
-            <div class="card bg-dark text-white" (click)="onPlay(track.title)">
-                <img [src]="track.album.cover" class="card-img-top" alt="{{ track.preview }}">
+            <h3 class="mt-4 mb-3">Músicas em alta</h3>
+            <div class="featured">
+                <div class="card-wrapper" *ngFor="let track of topTracks">
+                    <div class="card bg-dark text-white" (click)="onPlay(track.title)">
+                        <img [src]="track.album.cover" class="card-img-top" alt="{{ track.preview }}">
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <h3 class="mt-4 mb-3">Genêros em alta</h3>
+            <div class="featured">
+                <div class="card-wrapper" *ngFor="let genre of genres">
+                    <div class="card bg-dark text-white" (click)="onPlay(genre.name)">
+                        <img [src]="genre.picture" class="card-img-top" alt="{{ genre.name }}">
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4 mb-3">Artistas Populares</h3>
+            <div class="artist-list">
+                <div class="text-center" *ngFor="let artist of topArtists">
+                    <img [src]="artist.picture" alt="{{ artist.name }}">
+                    <p>{{ artist.name }}</p>
+                </div>
+            </div>
     </div>
 
-    <h3 class="mt-4 mb-3">Genêros em alta</h3>
-    <div class="featured">
-        <div class="card-wrapper" *ngFor="let genre of genres">
-            <div class="card bg-dark text-white" (click)="onPlay(genre.name)">
-                <img [src]="genre.picture" class="card-img-top" alt="{{ genre.name }}">
-            </div>
-        </div>
-    </div>
 
-    <h3 class="mt-4 mb-3">Artistas Populares</h3>
-    <div class="artist-list">
-        <div class="text-center" *ngFor="let artist of topArtists">
-            <img [src]="artist.picture" alt="{{ artist.name }}">
-            <p>{{ artist.name }}</p>
+    <div class="search-results-container" *ngIf="searchResults.length > 0">
+        <h3 class="text-light mb-3">Resultados da Busca:</h3>
+        <div class="row">
+            <div class="col-md-3 mb-4" *ngFor="let music of searchResults">
+            <div class="card bg-dark-secondary text-white">
+                <img [src]="music.cover" class="card-img-top" alt="{{ music.title }}" />
+                <div class="card-body">
+                <h5 class="card-title">{{ music.title }}</h5>
+                <p class="card-text">{{ music.artist }}</p>
+                <button class="btn btn-primary w-100" (click)="playMusic(music)">
+                    {{ isPlaying ? 'Pause' : 'Play' }}
+                </button>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>

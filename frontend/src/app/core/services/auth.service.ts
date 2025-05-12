@@ -27,6 +27,15 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/`, user);
   }
 
+  getMe() {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.apiUrl}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
 
   logout(): void {
     localStorage.removeItem('token');

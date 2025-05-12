@@ -1,0 +1,27 @@
+<div class="navbar-container d-flex justify-content-between align-items-center p-2 bg-dark text-white">
+  <div class="search-bar">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Digite o nome da música..."
+      [(ngModel)]="query"
+      (keyup.enter)="search()"
+    />
+  </div>
+  <div class="user-options dropdown">
+    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Olá, bem-vindo(a)
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li (click)="onLogout()">Logout</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sidebar bg-dark text-white p-3">
+  <h5 class="mb-3">Minhas Opções</h5>
+  <ul class="list-group">
+    <li class="list-group-item bg-dark text-white border-0"><a href="#">Criar Playlist</a></li>
+    <li class="list-group-item bg-dark text-white border-0"><a href="#">Minhas Playlists</a></li>
+  </ul>
+</div>

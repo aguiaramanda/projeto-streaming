@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Artists, Genre, Music, Playlist, Track } from '../../models/deezer.models';
 import { subscribeOn } from 'rxjs';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { SearchService } from '../../core/services/search.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule ],
 })
 export class DashboardComponent implements OnInit {
   musicList: Music[] = [];
@@ -19,28 +21,50 @@ export class DashboardComponent implements OnInit {
   topArtists: Artists[] = [];
   topTracks: Track[] = [];
   genres: Genre[] = [];
+  searchResults: any[] = [];
+  isPlaying: boolean = false;
+  currentTrack: HTMLAudioElement | null = null;
 
-  constructor(private deezerService: DeezerService) {}
+  constructor(
+    private deezerService: DeezerService,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit(): void {
     this.loadPredefinedPlaylists();
     this.loadTopArtists();
     this.loadTopTracks();
     this.loadGenres();
+
+    this.searchService.searchTerm$.subscribe((term) => {
+      if (term) {
+        this.deezerService.searchMusic(term).subscribe({
+          next: (data) => {
+            this.searchResults = data;
+            this.hideSections();
+          },
+          error: (err) => console.error('Erro ao buscar músicas:', err),
+        });
+      }
+    });
   }
 
-  public searchMusic() {
-    if (this.query) {
-      this.deezerService.searchMusic(this.query)
-      .subscribe({
-        next: (data: Music[]) => {
-          this.musicList = data;
-        },
-        error: (err) => {
-          console.error('Erro ao buscar músicas:', err);
-        }
-      });
+  hideSections() {
+    const sections = document.querySelectorAll('.hide-on-search');
+    sections.forEach((section) => {
+      (section as HTMLElement).style.display = 'none';
+    });
+  }
+
+  playMusic(music: any) {
+    if (this.currentTrack) {
+      this.currentTrack.pause();
+      this.currentTrack.currentTime = 0;
     }
+
+    this.currentTrack = new Audio(music.preview);
+    this.currentTrack.play();
+    this.isPlaying = true;
   }
 
   public loadPredefinedPlaylists() {
@@ -56,7 +80,7 @@ export class DashboardComponent implements OnInit {
   public loadTopArtists() {
     this.deezerService.getTopArtists().subscribe({
       next: (data: Artists[]) => {
-        this.topArtists = data.slice(0, 7);;
+        this.topArtists = data.slice(0, 7);
       },
       error: (err) => {
         console.error('Erro ao buscar Top Artists:', err);
@@ -77,8 +101,8 @@ export class DashboardComponent implements OnInit {
 
   public loadGenres() {
     this.deezerService.loadGenres().subscribe({
-      next: (data: Genre[]) => {
-        this.genres = data.slice(1, 9);
+      next: (response: any) => {
+        this.genres = response.data.slice(1, 9);
       },
       error: (err) => {
         console.error('Erro ao buscar Gêneros:', err);
