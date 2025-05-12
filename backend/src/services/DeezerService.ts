@@ -3,7 +3,7 @@ import axios from 'axios';
 export class DeezerService {
   private static BASE_URL = 'https://api.deezer.com';
 
-  static async searchMusic(query: string) {
+  public static async searchMusic(query: string) {
     try {
       const response = await axios.get(`${this.BASE_URL}/search`, {
         params: { q: query }
@@ -15,7 +15,7 @@ export class DeezerService {
     }
   }
 
-  static async getAlbum(albumId: number) {
+  public static async getAlbum(albumId: number) {
     try {
       const response = await axios.get(`${this.BASE_URL}/album/${albumId}`);
       return response.data;
@@ -25,7 +25,7 @@ export class DeezerService {
     }
   }
 
-  static async getArtist(artistId: number) {
+  public static async getArtist(artistId: number) {
     try {
       const response = await axios.get(`${this.BASE_URL}/artist/${artistId}`);
       return response.data;
@@ -34,4 +34,45 @@ export class DeezerService {
       throw new Error('Erro ao buscar artista');
     }
   }
+
+  public static async getPlaylist(id: string) {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/playlist/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar playlist:', error);
+      throw new Error('Erro ao buscar playlist:');
+    }
+  }
+
+  public static async getTopArtists() {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/chart`);
+      return response.data.artists.data;
+    } catch (error) {
+      console.error('Erro ao buscar os Top Artists:', error);
+      throw error;
+    }
+  }
+
+  public static async getTopTracks() {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/chart`);
+      return response.data.tracks.data;
+    } catch (error) {
+      console.error('Erro ao buscar os Top Músicas:', error);
+      throw error;
+    }
+  }
+
+  public static async getGenres() {
+  try {
+    const response = await axios.get(`${this.BASE_URL}/genre`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Erro ao buscar gêneros:', error);
+    throw error;
+  }
+}
+
 }
